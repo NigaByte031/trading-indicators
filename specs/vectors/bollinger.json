@@ -1,0 +1,48 @@
+{
+  "indicator": "bollinger",
+  "spec": "bollinger.md",
+  "inputs": ["close"],
+  "outputs": ["middle", "upper", "lower"],
+  "cases": [
+    {
+      "name": "basic: period=5 and 2 standard deviations over a linear series",
+      "parameters": { "period": 5, "num_std": 2 },
+      "input": { "close": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] },
+      "expected": {
+        "middle": [null, null, null, null, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0],
+        "upper": [null, null, null, null, 5.828427, 6.828427, 7.828427, 8.828427, 9.828427, 10.828427],
+        "lower": [null, null, null, null, 0.171573, 1.171573, 2.171573, 3.171573, 4.171573, 5.171573]
+      }
+    },
+    {
+      "name": "num_std=0 collapses the bands onto the middle line",
+      "parameters": { "period": 3, "num_std": 0 },
+      "input": { "close": [2, 4, 4, 4, 5, 5, 7, 9] },
+      "expected": {
+        "middle": [null, null, 3.333333, 4.0, 4.333333, 4.666667, 5.666667, 7.0],
+        "upper": [null, null, 3.333333, 4.0, 4.333333, 4.666667, 5.666667, 7.0],
+        "lower": [null, null, 3.333333, 4.0, 4.333333, 4.666667, 5.666667, 7.0]
+      }
+    },
+    {
+      "name": "non-monotonic series exercises the population deviation",
+      "parameters": { "period": 3, "num_std": 2 },
+      "input": { "close": [10, 12, 11, 13, 12, 14, 15, 13] },
+      "expected": {
+        "middle": [null, null, 11.0, 12.0, 12.0, 13.0, 13.666667, 14.0],
+        "upper": [null, null, 12.632993, 13.632993, 13.632993, 14.632993, 16.161105, 15.632993],
+        "lower": [null, null, 9.367007, 10.367007, 10.367007, 11.367007, 11.172228, 12.367007]
+      }
+    },
+    {
+      "name": "period longer than the series yields no defined values",
+      "parameters": { "period": 5, "num_std": 2 },
+      "input": { "close": [1, 2, 3] },
+      "expected": {
+        "middle": [null, null, null],
+        "upper": [null, null, null],
+        "lower": [null, null, null]
+      }
+    }
+  ]
+}

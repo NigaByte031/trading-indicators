@@ -47,6 +47,7 @@ Rules for the shared format live in [`specs/README.md`](specs/README.md).
 | RSI (Relative Strength Index) | [spec](specs/rsi.md) | [vectors](specs/vectors/rsi.json) | ✅ | – | – |
 | ADX (Average Directional Index) | [spec](specs/adx.md) | [vectors](specs/vectors/adx.json) | ✅ | – | – |
 | Ichimoku (Ichimoku Kinko Hyo) | [spec](specs/ichimoku.md) | [vectors](specs/vectors/ichimoku.json) | ✅ | – | – |
+| Bollinger Bands (BB) | [spec](specs/bollinger.md) | [vectors](specs/vectors/bollinger.json) | ✅ | – | – |
 
 Languages marked `–` are planned. Adding one means: read `specs/<name>.md`,
 implement it, and check the output against `specs/vectors/<name>.json`.
