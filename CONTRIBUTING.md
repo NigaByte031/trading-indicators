@@ -17,8 +17,9 @@ Thanks for helping! The golden rule of this repository is:
 3. **Implement the port** — in each language folder you support, e.g.
    `python/src/indicators/<slug>.py`.
 4. **Test the port against the vectors** — do *not* hard-code expected values in
-   the test; load the JSON from `specs/vectors/`. See
-   `python/tests/test_ema.py` for the pattern.
+   the test; load the JSON from `specs/vectors/`. The shared helpers in
+   `python/tests/_vectors.py` load a case file by slug, and
+   `python/tests/test_ema.py` shows the pattern.
 5. **Update the matrix** in the root `README.md`.
 
 ## Adding a new language
@@ -32,8 +33,18 @@ matrix in the root `README.md`.
 
 ```bash
 cd python
-python -m pytest
+python -m pytest        # tests
+ruff check .            # lint
 ```
+
+Both commands run in CI on every push and pull request. Before opening a pull
+request, please make sure they pass locally and fill in the checklist in the
+pull-request template.
+
+## Recording changes
+
+Add a line under `## [Unreleased]` in [`CHANGELOG.md`](CHANGELOG.md) for any
+user-visible change, following [Keep a Changelog](https://keepachangelog.com/).
 
 ## Guidelines
 
@@ -41,3 +52,4 @@ python -m pytest
 - Keep an implementation a faithful, readable transcription of its spec — the
   same algorithm should look similar in every language.
 - One indicator = one spec = one vector file = one file per language.
+- Be kind: this project follows the [Code of Conduct](CODE_OF_CONDUCT.md).

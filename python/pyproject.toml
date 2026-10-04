@@ -20,6 +20,7 @@ dependencies = []
 
 [project.optional-dependencies]
 test = ["pytest>=7"]
+dev = ["pytest>=7", "ruff>=0.6"]
 
 [project.urls]
 Homepage = "https://github.com/NigaByte031/trading-indicators"
@@ -29,4 +30,13 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["src"]
+pythonpath = ["src", "tests"]
+addopts = "-ra"
+
+[tool.ruff]
+target-version = "py39"
+line-length = 88
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]

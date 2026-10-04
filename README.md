@@ -1,5 +1,9 @@
 # trading-indicators
 
+[![CI](https://github.com/NigaByte031/trading-indicators/actions/workflows/ci.yml/badge.svg)](https://github.com/NigaByte031/trading-indicators/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue.svg)](python/)
+
 A multi-language collection of technical indicators.
 
 Every indicator lives in a **language-agnostic specification** under
@@ -19,6 +23,7 @@ verified against a shared source of truth. That is exactly what a monorepo plus
 
 ```
 trading-indicators/
+├── .github/          # CI and GitHub templates
 ├── specs/            # ⭐ the single source of truth (language-agnostic)
 │   ├── <indicator>.md
 │   └── vectors/      # shared input → expected output, in JSON
@@ -45,18 +50,25 @@ Rules for the shared format live in [`specs/README.md`](specs/README.md).
 Languages marked `–` are planned. Adding one means: read `specs/<name>.md`,
 implement it, and check the output against `specs/vectors/<name>.json`.
 
-## Python
+## Development
+
+The Python port is self-contained under [`python/`](python/) and has no runtime
+dependencies (Python 3.9+).
 
 ```bash
 cd python
-python -m pytest
+python -m pytest        # run the suite against the shared vectors
+ruff check .            # lint (pip install ruff, or pip install -e ".[dev]")
 ```
 
-Requires Python 3.9+ and `pytest` (no runtime dependencies).
+CI runs the test suite on Python 3.9–3.13 plus Ruff on every push and pull
+request — see [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
 
 ## Contributing
 
-See [`CONTRIBUTING.md`](CONTRIBUTING.md).
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) and our
+[`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md). Notable changes are recorded in the
+[`CHANGELOG.md`](CHANGELOG.md).
 
 ## License
 

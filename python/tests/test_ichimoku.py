@@ -7,35 +7,22 @@ Pine Script, ...) are validated against the exact same contract.
 
 from __future__ import annotations
 
-import json
-import math
-from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import pytest
 
 from indicators import ichimoku
 
-VECTORS_PATH = (
-    Path(__file__).resolve().parents[2] / "specs" / "vectors" / "ichimoku.json"
-)
+from _vectors import is_undefined, load_cases
 
 LINES = ("tenkan", "kijun", "senkou_a", "senkou_b", "chikou")
-
-
-def _load_cases() -> List[Dict[str, Any]]:
-    return json.loads(VECTORS_PATH.read_text(encoding="utf-8"))["cases"]
-
-
-def _is_undefined(value: Optional[float]) -> bool:
-    return value is None or (isinstance(value, float) and math.isnan(value))
 
 
 def _line(result: Any, name: str) -> List[Optional[float]]:
     return getattr(result, name)
 
 
-@pytest.mark.parametrize("case", _load_cases(), ids=lambda case: case["name"])
+@pytest.mark.parametrize("case", load_cases("ichimoku"), ids=lambda case: case["name"])
 def test_ichimoku_matches_shared_vectors(case: Dict[str, Any]) -> None:
     params = case["parameters"]
     result = ichimoku(
@@ -54,38 +41,44 @@ def test_ichimoku_matches_shared_vectors(case: Dict[str, Any]) -> None:
         assert len(got_series) == len(expected), name
         for got, want in zip(got_series, expected):
             if want is None:
-                assert _is_undefined(got), f"{name}: expected undefined, got {got!r}"
+                assert is_undefined(got), f"{name}: expected undefined"
             else:
                 assert got == pytest.approx(want, abs=1e-9), name
 
 
 def test_chikou_is_the_close_shifted_back_by_the_displacement() -> None:
     close = [1, 2, 3, 4, 5, 6]
-    result = ichimoku(close, close, close, conversion=1, base=1, span_b=1, displacement=2)
+    result = ichimoku(
+        close, close, close, conversion=1, base=1, span_b=1, displacement=2
+    )
     assert result.chikou == pytest.approx([3, 4, 5, 6, None, None])
 
 
 def test_displacement_zero_keeps_chikou_equal_to_close() -> None:
     close = [1, 2, 3, 4]
-    result = ichimoku(close, close, close, conversion=1, base=1, span_b=1, displacement=0)
+    result = ichimoku(
+        close, close, close, conversion=1, base=1, span_b=1, displacement=0
+    )
     assert result.chikou == pytest.approx([1, 2, 3, 4])
 
 
 def test_default_parameters_are_the_classic_9_26_52_26() -> None:
     import inspect
 
-    signature = inspect.signature(ichimoku)
-    assert signature.parameters["conversion"].default == 9
-    assert signature.parameters["base"].default == 26
-    assert signature.parameters["span_b"].default == 52
-    assert signature.parameters["displacement"].default == 26
+    defaults = inspect.signature(ichimoku).parameters
+    assert defaults["conversion"].default == 9
+    assert defaults["base"].default == 26
+    assert defaults["span_b"].default == 52
+    assert defaults["displacement"].default == 26
 
 
 def test_every_line_has_the_same_length_as_the_input() -> None:
     high = [1, 2, 3, 4, 5, 6, 7, 8]
     low = [0, 1, 2, 3, 4, 5, 6, 7]
     close = [1, 2, 3, 4, 5, 6, 7, 8]
-    result = ichimoku(high, low, close, conversion=3, base=4, span_b=5, displacement=2)
+    result = ichimoku(
+        high, low, close, conversion=3, base=4, span_b=5, displacement=2
+    )
     for name in LINES:
         assert len(_line(result, name)) == len(high), name
 
@@ -116,4 +109,6 @@ def test_negative_displacement_raises() -> None:
 
 def test_non_integer_parameters_raise() -> None:
     with pytest.raises(TypeError):
-        ichimoku([1, 2, 3], [1, 2, 3], [1, 2, 3], conversion=2.5)  # type: ignore[arg-type]
+        ichimoku(
+            [1, 2, 3], [1, 2, 3], [1, 2, 3], conversion=2.5  # type: ignore[arg-type]
+        )

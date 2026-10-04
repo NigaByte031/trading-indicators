@@ -7,29 +7,16 @@ Script, ...) are validated against the exact same contract.
 
 from __future__ import annotations
 
-import json
-import math
-from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict
 
 import pytest
 
 from indicators import adx
 
-VECTORS_PATH = (
-    Path(__file__).resolve().parents[2] / "specs" / "vectors" / "adx.json"
-)
+from _vectors import is_undefined, load_cases
 
 
-def _load_cases() -> List[Dict[str, Any]]:
-    return json.loads(VECTORS_PATH.read_text(encoding="utf-8"))["cases"]
-
-
-def _is_undefined(value: Optional[float]) -> bool:
-    return value is None or (isinstance(value, float) and math.isnan(value))
-
-
-@pytest.mark.parametrize("case", _load_cases(), ids=lambda case: case["name"])
+@pytest.mark.parametrize("case", load_cases("adx"), ids=lambda case: case["name"])
 def test_adx_matches_shared_vectors(case: Dict[str, Any]) -> None:
     params = case["parameters"]
     result = adx(
@@ -43,7 +30,7 @@ def test_adx_matches_shared_vectors(case: Dict[str, Any]) -> None:
     assert len(result) == len(expected)
     for got, want in zip(result, expected):
         if want is None:
-            assert _is_undefined(got), f"expected undefined, got {got!r}"
+            assert is_undefined(got), f"expected undefined, got {got!r}"
         else:
             assert got == pytest.approx(want, abs=1e-6)
 
@@ -63,7 +50,7 @@ def test_strong_uptrend_converges_to_100() -> None:
     low = [9.0 + i for i in range(n)]
     close = [9.5 + i for i in range(n)]
     result = adx(high, low, close, 3)
-    assert _is_undefined(result[4]) is False
+    assert is_undefined(result[4]) is False
     assert result[4] == pytest.approx(100.0)
     assert result[-1] == pytest.approx(100.0)
 
