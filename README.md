@@ -37,7 +37,9 @@ Rules for the shared format live in [`specs/README.md`](specs/README.md).
 
 | Indicator | Spec | Test vectors | Python | MQL5 | Pine Script |
 |-----------|------|--------------|:------:|:----:|:-----------:|
+| SMA / MA (Simple Moving Average) | [spec](specs/sma.md) | [vectors](specs/vectors/sma.json) | ✅ | – | – |
 | EMA (Exponential Moving Average) | [spec](specs/ema.md) | [vectors](specs/vectors/ema.json) | ✅ | – | – |
+| ADX (Average Directional Index) | [spec](specs/adx.md) | [vectors](specs/vectors/adx.json) | ✅ | – | – |
 
 Languages marked `–` are planned. Adding one means: read `specs/<name>.md`,
 implement it, and check the output against `specs/vectors/<name>.json`.

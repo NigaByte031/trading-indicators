@@ -1,0 +1,24 @@
+{
+  "indicator": "sma",
+  "spec": "sma.md",
+  "cases": [
+    {
+      "name": "basic: period=4 with a non-monotonic series",
+      "parameters": { "period": 4 },
+      "input": { "close": [10, 12, 11, 13, 12, 14, 15, 13] },
+      "expected": { "sma": [null, null, null, 11.5, 12.0, 12.5, 13.5, 13.5] }
+    },
+    {
+      "name": "period=1 is the identity function",
+      "parameters": { "period": 1 },
+      "input": { "close": [5, 7, 6, 8] },
+      "expected": { "sma": [5.0, 7.0, 6.0, 8.0] }
+    },
+    {
+      "name": "period longer than the series yields no defined values",
+      "parameters": { "period": 10 },
+      "input": { "close": [1, 2, 3] },
+      "expected": { "sma": [null, null, null] }
+    }
+  ]
+}

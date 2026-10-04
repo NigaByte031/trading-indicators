@@ -1,0 +1,38 @@
+{
+  "indicator": "adx",
+  "spec": "adx.md",
+  "cases": [
+    {
+      "name": "basic: period=3 over a mixed high/low/close series",
+      "parameters": { "period": 3 },
+      "input": {
+        "high": [10.0, 10.6, 10.2, 10.9, 10.5, 11.2, 11.0, 11.6, 11.3, 12.0, 11.7, 12.4],
+        "low": [9.0, 9.3, 9.1, 9.6, 9.4, 10.0, 9.8, 10.3, 10.1, 10.8, 10.5, 11.2],
+        "close": [9.4, 9.5, 9.2, 10.6, 9.6, 11.0, 10.0, 11.4, 10.3, 11.8, 10.7, 12.2]
+      },
+      "expected": {
+        "adx": [null, null, null, null, 57.285546, 62.229685, 55.289687, 59.360301, 51.905951, 57.20116, 47.358927, 51.780754]
+      }
+    },
+    {
+      "name": "not enough data to seed the DX average yields no defined values",
+      "parameters": { "period": 3 },
+      "input": {
+        "high": [1, 2, 3, 4],
+        "low": [0, 1, 2, 3],
+        "close": [1, 2, 3, 4]
+      },
+      "expected": { "adx": [null, null, null, null] }
+    },
+    {
+      "name": "flat market where +DI + -DI == 0 drives DX (and ADX) to 0",
+      "parameters": { "period": 2 },
+      "input": {
+        "high": [5, 5, 5, 5, 5, 5, 5],
+        "low": [5, 5, 5, 5, 5, 5, 5],
+        "close": [5, 5, 5, 5, 5, 5, 5]
+      },
+      "expected": { "adx": [null, null, 0.0, 0.0, 0.0, 0.0, 0.0] }
+    }
+  ]
+}
