@@ -1,0 +1,24 @@
+{
+  "indicator": "ema",
+  "spec": "ema.md",
+  "cases": [
+    {
+      "name": "basic: period=4 with a non-monotonic series",
+      "parameters": { "period": 4 },
+      "input": { "close": [10, 12, 11, 13, 12, 14, 15, 13] },
+      "expected": { "ema": [null, null, null, 11.5, 11.7, 12.62, 13.572, 13.3432] }
+    },
+    {
+      "name": "period=1 is the identity function",
+      "parameters": { "period": 1 },
+      "input": { "close": [5, 7, 6, 8] },
+      "expected": { "ema": [5, 7, 6, 8] }
+    },
+    {
+      "name": "period longer than the series yields no defined values",
+      "parameters": { "period": 10 },
+      "input": { "close": [1, 2, 3] },
+      "expected": { "ema": [null, null, null] }
+    }
+  ]
+}
