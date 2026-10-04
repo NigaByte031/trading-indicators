@@ -7,7 +7,8 @@ Each indicator is a faithful port of its language-agnostic specification in
 from indicators.adx import adx
 from indicators.ema import ema
 from indicators.ichimoku import IchimokuResult, ichimoku
+from indicators.rsi import rsi
 from indicators.sma import sma
 
-__all__ = ["adx", "ema", "ichimoku", "IchimokuResult", "sma"]
+__all__ = ["adx", "ema", "ichimoku", "IchimokuResult", "rsi", "sma"]
 __version__ = "0.1.0"

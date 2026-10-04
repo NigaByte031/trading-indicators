@@ -1,0 +1,30 @@
+{
+  "indicator": "rsi",
+  "spec": "rsi.md",
+  "cases": [
+    {
+      "name": "basic: period=3 over Wilder's classic price series",
+      "parameters": { "period": 3 },
+      "input": { "close": [44.34, 44.09, 44.15, 43.61, 44.33, 44.83, 45.10, 45.42, 45.84, 46.08] },
+      "expected": { "rsi": [null, null, null, 7.058824, 59.067358, 74.140753, 80.081941, 85.858134, 90.997792, 93.13603] }
+    },
+    {
+      "name": "flat market where avg_loss == 0 saturates at 100",
+      "parameters": { "period": 3 },
+      "input": { "close": [5, 5, 5, 5, 5, 5] },
+      "expected": { "rsi": [null, null, null, 100.0, 100.0, 100.0] }
+    },
+    {
+      "name": "an all-down series saturates at 0",
+      "parameters": { "period": 2 },
+      "input": { "close": [5, 4, 3, 2, 1] },
+      "expected": { "rsi": [null, null, 0.0, 0.0, 0.0] }
+    },
+    {
+      "name": "fewer than period + 1 prices yields no defined values",
+      "parameters": { "period": 3 },
+      "input": { "close": [1, 2, 3] },
+      "expected": { "rsi": [null, null, null] }
+    }
+  ]
+}

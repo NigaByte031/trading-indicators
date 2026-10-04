@@ -10,6 +10,9 @@ and this project adheres to
 
 ### Added
 
+- RSI — Relative Strength Index, with Wilder's smoothing and the simple-average
+  seed.
+
 - Continuous integration: the Python test suite runs on Python 3.9–3.13, plus a
   Ruff lint job.
 - `CODE_OF_CONDUCT.md`, `CITATION.cff`, pull-request and issue templates.

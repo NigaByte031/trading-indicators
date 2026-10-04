@@ -11,6 +11,7 @@ python/
 │   ├── adx.py
 │   ├── ema.py
 │   ├── ichimoku.py
+│   ├── rsi.py
 │   └── sma.py
 └── tests/              # reads the shared vectors from ../../specs/vectors
 ```
@@ -35,7 +36,7 @@ language in the repository.
 ## Trying it out
 
 ```python
-from indicators import adx, ema, ichimoku, sma
+from indicators import adx, ema, ichimoku, rsi, sma
 
 ema([10, 12, 11, 13, 12, 14, 15, 13], 4)
 # [None, None, None, 11.5, 11.7, 12.62, 13.572, 13.3432]
@@ -45,6 +46,9 @@ sma([10, 12, 11, 13, 12, 14, 15, 13], 4)
 
 adx(high, low, close, 14)
 # Wilder-smoothed ADX; the first 2 * period - 2 values are None
+
+rsi(close, 14)
+# 0-100 momentum oscillator; the first `period` values are None
 
 result = ichimoku(high, low, close)   # classic 9 / 26 / 52 / 26
 result.tenkan, result.kijun, result.senkou_a, result.senkou_b, result.chikou
