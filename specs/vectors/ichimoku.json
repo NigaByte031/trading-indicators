@@ -1,0 +1,56 @@
+{
+  "indicator": "ichimoku",
+  "spec": "ichimoku.md",
+  "inputs": ["high", "low", "close"],
+  "outputs": ["tenkan", "kijun", "senkou_a", "senkou_b", "chikou"],
+  "cases": [
+    {
+      "name": "basic: displacement bakes the cloud forward and the lagging span back",
+      "parameters": { "conversion": 3, "base": 5, "span_b": 7, "displacement": 4 },
+      "input": {
+        "high": [10, 11, 12, 11, 13, 14, 13, 15, 16, 15, 17, 18, 17, 19, 20],
+        "low": [8, 9, 10, 9, 11, 12, 11, 13, 14, 13, 15, 16, 15, 17, 18],
+        "close": [9, 10.5, 11, 10, 12, 13.5, 12, 14, 15.5, 14, 16, 17.5, 16, 18, 19.5]
+      },
+      "expected": {
+        "tenkan": [null, null, 10.0, 10.5, 11.0, 11.5, 12.5, 13.0, 13.5, 14.5, 15.0, 15.5, 16.5, 17.0, 17.5],
+        "kijun": [null, null, null, null, 10.5, 11.5, 11.5, 12.0, 13.5, 13.5, 14.0, 15.5, 15.5, 16.0, 17.5],
+        "senkou_a": [null, null, null, null, null, null, null, null, 10.75, 11.5, 12.0, 12.5, 13.5, 14.0, 14.5],
+        "senkou_b": [null, null, null, null, null, null, null, null, null, null, 11.0, 12.0, 12.5, 12.5, 14.0],
+        "chikou": [12, 13.5, 12, 14, 15.5, 14, 16, 17.5, 16, 18, 19.5, null, null, null, null]
+      }
+    },
+    {
+      "name": "displacement=0 returns the unshifted lines",
+      "parameters": { "conversion": 2, "base": 3, "span_b": 4, "displacement": 0 },
+      "input": {
+        "high": [10, 11, 12, 11, 13, 14, 13, 15, 16, 15, 17, 18, 17, 19, 20],
+        "low": [8, 9, 10, 9, 11, 12, 11, 13, 14, 13, 15, 16, 15, 17, 18],
+        "close": [9, 10.5, 11, 10, 12, 13.5, 12, 14, 15.5, 14, 16, 17.5, 16, 18, 19.5]
+      },
+      "expected": {
+        "tenkan": [null, 9.5, 10.5, 10.5, 11.0, 12.5, 12.5, 13.0, 14.5, 14.5, 15.0, 16.5, 16.5, 17.0, 18.5],
+        "kijun": [null, null, 10.0, 10.5, 11.0, 11.5, 12.5, 13.0, 13.5, 14.5, 15.0, 15.5, 16.5, 17.0, 17.5],
+        "senkou_a": [null, null, 10.25, 10.5, 11.0, 12.0, 12.5, 13.0, 14.0, 14.5, 15.0, 16.0, 16.5, 17.0, 18.0],
+        "senkou_b": [null, null, null, 10.0, 11.0, 11.5, 11.5, 13.0, 13.5, 13.5, 15.0, 15.5, 15.5, 17.0, 17.5],
+        "chikou": [9, 10.5, 11, 10, 12, 13.5, 12, 14, 15.5, 14, 16, 17.5, 16, 18, 19.5]
+      }
+    },
+    {
+      "name": "series shorter than every period yields no defined values",
+      "parameters": { "conversion": 3, "base": 5, "span_b": 7, "displacement": 4 },
+      "input": {
+        "high": [1, 2],
+        "low": [1, 2],
+        "close": [1, 2]
+      },
+      "expected": {
+        "tenkan": [null, null],
+        "kijun": [null, null],
+        "senkou_a": [null, null],
+        "senkou_b": [null, null],
+        "chikou": [null, null]
+      }
+    }
+  ]
+}

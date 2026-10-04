@@ -40,6 +40,7 @@ Rules for the shared format live in [`specs/README.md`](specs/README.md).
 | SMA / MA (Simple Moving Average) | [spec](specs/sma.md) | [vectors](specs/vectors/sma.json) | ✅ | – | – |
 | EMA (Exponential Moving Average) | [spec](specs/ema.md) | [vectors](specs/vectors/ema.json) | ✅ | – | – |
 | ADX (Average Directional Index) | [spec](specs/adx.md) | [vectors](specs/vectors/adx.json) | ✅ | – | – |
+| Ichimoku (Ichimoku Kinko Hyo) | [spec](specs/ichimoku.md) | [vectors](specs/vectors/ichimoku.json) | ✅ | – | – |
 
 Languages marked `–` are planned. Adding one means: read `specs/<name>.md`,
 implement it, and check the output against `specs/vectors/<name>.json`.
