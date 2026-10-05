@@ -8,6 +8,7 @@ from indicators.adx import adx
 from indicators.bollinger import BollingerBands, bollinger
 from indicators.ema import ema
 from indicators.ichimoku import IchimokuResult, ichimoku
+from indicators.macd import MACDResult, macd
 from indicators.rsi import rsi
 from indicators.sma import sma
 
@@ -18,6 +19,8 @@ __all__ = [
     "ema",
     "ichimoku",
     "IchimokuResult",
+    "macd",
+    "MACDResult",
     "rsi",
     "sma",
 ]

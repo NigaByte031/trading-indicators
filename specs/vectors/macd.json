@@ -1,0 +1,45 @@
+{
+  "spec": "macd.md",
+  "cases": [
+    {
+      "name": "basic: fast=2, slow=3, signal=2 on a non-monotonic series",
+      "parameters": { "fast_period": 2, "slow_period": 3, "signal_period": 2 },
+      "input": { "close": [10, 12, 11, 13, 12, 14, 15, 13] },
+      "expected": {
+        "macd": [null, null, 0.0, 0.333333, 0.111111, 0.37037, 0.45679, -0.014403],
+        "signal": [null, null, null, 0.166667, 0.12963, 0.290124, 0.401235, 0.124143],
+        "histogram": [null, null, null, 0.166667, -0.018519, 0.080247, 0.055556, -0.138546]
+      }
+    },
+    {
+      "name": "signal_period longer than the defined MACD region",
+      "parameters": { "fast_period": 2, "slow_period": 3, "signal_period": 10 },
+      "input": { "close": [10, 12, 11, 13, 12] },
+      "expected": {
+        "macd": [null, null, 0.0, 0.333333, 0.111111],
+        "signal": [null, null, null, null, null],
+        "histogram": [null, null, null, null, null]
+      }
+    },
+    {
+      "name": "equal periods give a flat MACD of zero",
+      "parameters": { "fast_period": 2, "slow_period": 2, "signal_period": 2 },
+      "input": { "close": [10, 12, 11, 13, 12] },
+      "expected": {
+        "macd": [null, 0.0, 0.0, 0.0, 0.0],
+        "signal": [null, null, 0.0, 0.0, 0.0],
+        "histogram": [null, null, 0.0, 0.0, 0.0]
+      }
+    },
+    {
+      "name": "slow period longer than the series yields no defined values",
+      "parameters": { "fast_period": 2, "slow_period": 10, "signal_period": 3 },
+      "input": { "close": [10, 12, 11] },
+      "expected": {
+        "macd": [null, null, null],
+        "signal": [null, null, null],
+        "histogram": [null, null, null]
+      }
+    }
+  ]
+}

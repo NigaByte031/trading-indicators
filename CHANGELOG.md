@@ -14,6 +14,8 @@ and this project adheres to
   seed.
 - Bollinger Bands — a moving average with upper/lower bands `num_std` population
   standard deviations away.
+- MACD — Moving Average Convergence Divergence: the fast/slow EMA spread, its
+  signal EMA and the histogram.
 
 - Continuous integration: the Python test suite runs on Python 3.9–3.13, plus a
   Ruff lint job.

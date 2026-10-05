@@ -12,6 +12,7 @@ python/
 │   ├── bollinger.py
 │   ├── ema.py
 │   ├── ichimoku.py
+│   ├── macd.py
 │   ├── rsi.py
 │   └── sma.py
 └── tests/              # reads the shared vectors from ../../specs/vectors
@@ -37,7 +38,7 @@ language in the repository.
 ## Trying it out
 
 ```python
-from indicators import adx, bollinger, ema, ichimoku, rsi, sma
+from indicators import adx, bollinger, ema, ichimoku, macd, rsi, sma
 
 ema([10, 12, 11, 13, 12, 14, 15, 13], 4)
 # [None, None, None, 11.5, 11.7, 12.62, 13.572, 13.3432]
@@ -58,4 +59,8 @@ bands.middle, bands.upper, bands.lower
 result = ichimoku(high, low, close)   # classic 9 / 26 / 52 / 26
 result.tenkan, result.kijun, result.senkou_a, result.senkou_b, result.chikou
 # five same-length series; the cloud is shifted forward, Chikou back
+
+result = macd(close)   # classic 12 / 26 / 9
+result.macd, result.signal, result.histogram
+# the MACD line, its signal EMA, and their difference
 ```
