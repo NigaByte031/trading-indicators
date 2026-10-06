@@ -67,11 +67,20 @@ ruff check .            # lint (pip install ruff, or pip install -e ".[dev]")
 CI runs the test suite on Python 3.9–3.13 plus Ruff on every push and pull
 request — see [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
 
+## Releases
+
+Notable changes are recorded in the [`CHANGELOG.md`](CHANGELOG.md); the prose
+narrative for each tag lives in [`docs/releases/`](docs/releases/). Pushing a
+`v*` tag runs the release workflow, which tests the tagged commit and publishes
+those notes as the GitHub release.
+
+Current version: **v0.2.0** — RSI, Bollinger Bands and MACD on top of the
+v0.1.0 scaffold.
+
 ## Contributing
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md) and our
-[`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md). Notable changes are recorded in the
-[`CHANGELOG.md`](CHANGELOG.md).
+[`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
 
 ## License
 

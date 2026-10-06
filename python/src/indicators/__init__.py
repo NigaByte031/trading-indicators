@@ -4,6 +4,7 @@ Each indicator is a faithful port of its language-agnostic specification in
 ``specs/`` and is verified against the shared vectors in ``specs/vectors/``.
 """
 
+from indicators._version import __version__
 from indicators.adx import adx
 from indicators.bollinger import BollingerBands, bollinger
 from indicators.ema import ema
@@ -23,5 +24,5 @@ __all__ = [
     "MACDResult",
     "rsi",
     "sma",
+    "__version__",
 ]
-__version__ = "0.1.0"

@@ -8,6 +8,7 @@ The Python implementation of the indicators in this repository.
 python/
 ├── pyproject.toml
 ├── src/indicators/     # the package
+│   ├── _version.py     # the version, defined once
 │   ├── adx.py
 │   ├── bollinger.py
 │   ├── ema.py
@@ -23,6 +24,12 @@ python/
 - Python 3.9+
 - No runtime dependencies
 - `pytest` for the tests
+
+## Version
+
+The published version comes from `src/indicators/_version.py`: `pyproject.toml`
+reads it through `[tool.setuptools.dynamic]`, and `indicators.__version__`
+re-exports it. Bumping a release means editing that one line.
 
 ## Running the tests
 

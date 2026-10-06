@@ -46,6 +46,20 @@ pull-request template.
 Add a line under `## [Unreleased]` in [`CHANGELOG.md`](CHANGELOG.md) for any
 user-visible change, following [Keep a Changelog](https://keepachangelog.com/).
 
+## Cutting a release
+
+1. Move the `[Unreleased]` entries of `CHANGELOG.md` into a new
+   `## [x.y.z] - YYYY-MM-DD` section and reset `[Unreleased]`.
+2. Bump `python/src/indicators/_version.py` — the version lives in that one file
+   and the build reads it from there.
+3. Add `docs/releases/vX.Y.Z.md` with the narrative notes; the release workflow
+   publishes that file as the GitHub release body.
+4. Commit, then `git tag -a vX.Y.Z -m "vX.Y.Z"` and `git push origin main --tags`.
+
+The release workflow re-runs the tests on the tagged commit and refuses to
+publish if the tag does not match the package version, so a tag is a promise the
+suite already verified.
+
 ## Guidelines
 
 - Prefer **zero runtime dependencies** for an implementation when practical.
